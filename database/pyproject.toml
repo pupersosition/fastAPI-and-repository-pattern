@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "data_insertion"
+version = "0.1.0"
+description = "Service for inserting data from CSV into the database."
+authors = ["Nik Vostrosablin nikita.vostrosablin@gmail.com"]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+pandas = "^2.1.0"
+sqlalchemy = "^2.0.20"
+psycopg2-binary = "^2.9.7"
+kaggle = "^1.6.0a3"
+
+[build-system]
+requires = ["poetry-core>=1.6"]
+build-backend = "poetry.core.masonry.api"

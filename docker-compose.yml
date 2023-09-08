@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+      - ./database/init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+      - pgdata:/var/lib/postgresql/data
+  data_insertion:
+    environment:
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      CSV_PATH: ${CSV_PATH}
+    build:
+      context: ./database
+      dockerfile: Dockerfile.data_insertion
+    depends_on:
+      - db
+
+volumes:
+  pgdata:
+
+#  app:
+#    build:
+#      context: .
+#      args:
+#        DEV: "true"
+#    ports:
+#      - "8080:8080"
+#    env_file:
+#      - .env
+#    command: uvicorn main:app --reload --host 0.0.0.0 --port 8080
+#    volumes:
+#      - ./app:/app/
