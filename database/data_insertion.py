@@ -10,7 +10,7 @@ print("Loading configurations...")
 DB_HOST = os.environ['DB_HOST']
 DB_NAME = os.environ['DB_NAME']
 DB_USER = os.environ['DB_USER']
-DB_PASS = os.environ['DB_PASSWORD']
+DB_PASS = os.environ['POSTGRES_PASSWORD']
 CSV_PATH = os.environ['CSV_PATH']
 MAX_ATTEMPTS = 5
 SLEEP_INTERVAL = 5  # in seconds
@@ -60,6 +60,7 @@ class Car(Base):
     manufacturer = relationship("Manufacturer", back_populates="cars")
     city_id = Column(Integer, ForeignKey('cities.id'))
     city = relationship("City", back_populates="cars")
+
 
 def create_session():
     print("Attempting to connect to the database...")

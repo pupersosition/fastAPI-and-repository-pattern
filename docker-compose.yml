@@ -4,8 +4,6 @@ services:
   db:
     image: postgres:15
     environment:
-      DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
       DB_HOST: ${DB_HOST}
       DB_NAME: ${DB_NAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
@@ -15,7 +13,6 @@ services:
   data_insertion:
     environment:
       DB_USER: ${DB_USER}
-      DB_PASSWORD: ${DB_PASSWORD}
       DB_HOST: ${DB_HOST}
       DB_NAME: ${DB_NAME}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
