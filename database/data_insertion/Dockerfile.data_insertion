@@ -1,6 +1,9 @@
 # Use an official Python runtime as the base image
 FROM python:3.11-slim
 
+ARG KAGGLE_USR
+ARG KAGGLE_TOKEN
+
 # Set the working directory in the container
 WORKDIR /usr/src/app
 
@@ -13,18 +16,21 @@ RUN apt-get update && \
 RUN pip install poetry
 
 # Copy only the Poetry lock file and pyproject.toml first to leverage Docker caching
-COPY ./pyproject.toml ./
+COPY ./database/data_insertion/pyproject.toml ./
 
 # Install dependencies without virtual environments
 RUN poetry config virtualenvs.create false \
     && poetry install --no-dev
 
-# Copy the data insertion script into the container
-COPY data_insertion.py ./
+# Copy the data insertion script and dependecies into the container
+COPY ./database/data_insertion/data_insertion.py .
+COPY ./database/data_insertion/models.py .
+COPY ./database/data_insertion/utils.py .
 
-# Copy kaggle json
-COPY kaggle.json /root/.kaggle/
-RUN chmod 600 /root/.kaggle/kaggle.json
+# Setup kaggle API
+RUN mkdir /root/.kaggle/ \
+    && echo "{\"username\":\"${KAGGLE_USR}\", \"key\":\"${KAGGLE_TOKEN}\"}" > /root/.kaggle/kaggle.json \
+    && chmod 600 /root/.kaggle/kaggle.json
 
 
 # Use the Kaggle CLI to download the dataset

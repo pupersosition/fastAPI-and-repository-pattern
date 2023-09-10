@@ -19,8 +19,11 @@ services:
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
       CSV_PATH: ${CSV_PATH}
     build:
-      context: ./database
-      dockerfile: Dockerfile.data_insertion
+      context: ./
+      dockerfile: ./database/data_insertion/Dockerfile.data_insertion
+      args:
+        KAGGLE_USR: ${KAGGLE_USR}
+        KAGGLE_TOKEN: ${KAGGLE_TOKEN}
     depends_on:
       - db
 
