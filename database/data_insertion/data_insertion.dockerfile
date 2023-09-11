@@ -16,11 +16,12 @@ RUN apt-get update && \
 RUN pip install poetry
 
 # Copy only the Poetry lock file and pyproject.toml first to leverage Docker caching
-COPY ./database/data_insertion/pyproject.toml ./
+#COPY ./database/data_insertion/pyproject.toml ./
+COPY pyproject.toml ./
 
 # Install dependencies without virtual environments
 RUN poetry config virtualenvs.create false \
-    && poetry install --no-dev
+    && poetry install --no-dev --only database
 
 # Copy the data insertion script and dependecies into the container
 COPY ./database/data_insertion/data_insertion.py .

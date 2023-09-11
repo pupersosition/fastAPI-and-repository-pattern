@@ -11,6 +11,7 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
+# TODO: healthcheck instead of session connection attempts
   data_insertion:
     environment:
       DB_USER: ${DB_USER}
@@ -20,7 +21,7 @@ services:
       CSV_PATH: ${CSV_PATH}
     build:
       context: ./
-      dockerfile: ./database/data_insertion/Dockerfile.data_insertion
+      dockerfile: database/data_insertion/data_insertion.dockerfile
       args:
         KAGGLE_USR: ${KAGGLE_USR}
         KAGGLE_TOKEN: ${KAGGLE_TOKEN}
