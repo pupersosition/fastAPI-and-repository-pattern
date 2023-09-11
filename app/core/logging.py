@@ -1,9 +1,6 @@
-import logging
-
 from loguru import logger
 
+# Configure logger (e.g., format, rotation, etc.)
+# This is just a basic setup, you can further customize it based on your needs.
+logger.add("app.log", rotation="10 MB")
 
-class InterceptHandler(logging.Handler):
-    def emit(self, record: logging.LogRecord) -> None:  # pragma: no cover
-        logger_opt = logger.opt(depth=7, exception=record.exc_info)
-        logger_opt.log(record.levelname, record.getMessage())

@@ -11,7 +11,6 @@ services:
       - pgdata:/var/lib/postgresql/data
     ports:
       - "5432:5432"
-# TODO: healthcheck instead of session connection attempts
   data_insertion:
     environment:
       DB_USER: ${DB_USER}
@@ -27,19 +26,21 @@ services:
         KAGGLE_TOKEN: ${KAGGLE_TOKEN}
     depends_on:
       - db
+  api:
+    build:
+      context: ./
+      dockerfile: app/docker/api.dockerfile
+    ports:
+      - "8000:8000"
+    depends_on:
+      - db
+      - data_insertion
+    environment:
+      DB_USER: ${DB_USER}
+      DB_HOST: ${DB_HOST}
+      DB_NAME: ${DB_NAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
 
 volumes:
   pgdata:
 
-#  app:
-#    build:
-#      context: .
-#      args:
-#        DEV: "true"
-#    ports:
-#      - "8080:8080"
-#    env_file:
-#      - .env
-#    command: uvicorn main:app --reload --host 0.0.0.0 --port 8080
-#    volumes:
-#      - ./app:/app/

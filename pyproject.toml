@@ -12,6 +12,8 @@ pydantic = "^2.0.0"
 requests = "^2.22.0"
 loguru = "^0.7.0"
 joblib = "^1.2.0"
+asyncpg = "^0.28.0"
+greenlet = "^2.0.2"
 
 [tool.poetry.group.database.dependencies]
 pandas = "^2.1.0"
