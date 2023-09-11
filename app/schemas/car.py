@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from datetime import datetime
 from typing import Optional
 
@@ -6,7 +6,7 @@ class CarBase(BaseModel):
     url: Optional[str]
     price: Optional[float]
     year: Optional[int]
-    manufacturer_id: Optional[int]
+    manufacturer_id: Optional[int] = Field(None, example=32)
     model: Optional[str]
     condition: Optional[str]
     cylinders: Optional[str]
