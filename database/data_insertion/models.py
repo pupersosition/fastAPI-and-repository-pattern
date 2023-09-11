@@ -1,5 +1,6 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Float, DECIMAL, BigInteger
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, DECIMAL, BigInteger, DateTime
 from sqlalchemy.orm import relationship, declarative_base
+from datetime import datetime
 
 
 Base = declarative_base()
@@ -33,5 +34,6 @@ class Car(Base):
     description: str = Column(String)
     latitude: float = Column(Float)
     longitude: float = Column(Float)
+    posting_date: datetime = Column(DateTime(timezone=True))
     manufacturer_id: int = Column(Integer, ForeignKey('manufacturers.id'))
     manufacturer = relationship("Manufacturer", back_populates="cars")

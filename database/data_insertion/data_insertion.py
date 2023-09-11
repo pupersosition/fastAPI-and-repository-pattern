@@ -5,6 +5,8 @@ import os
 from utils import session_scope, bulk_insert_avoid_conflicts, clean_data
 
 from models import Car, Manufacturer
+from dateutil.parser import parse
+from math import isnan
 
 # Configuration
 DB_HOST: str = os.environ['DB_HOST']
@@ -55,6 +57,7 @@ if __name__ == '__main__':
                     'description': row['description'],
                     'latitude': row['lat'],
                     'longitude': row['long'],
+                    'posting_date': None if str(row['posting_date']) == 'nan' else parse(str(row['posting_date'])),
                     'manufacturer': row['manufacturer']
                 }
                 car_mapping = clean_data(car_mapping)

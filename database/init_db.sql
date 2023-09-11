@@ -27,5 +27,5 @@ CREATE TABLE cars (
     description TEXT,
     latitude DECIMAL,
     longitude DECIMAL,
-    posting_date TIMESTAMP
+    posting_date TIMESTAMP WITH TIME ZONE
 );
