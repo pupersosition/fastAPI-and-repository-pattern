@@ -6,7 +6,7 @@ CREATE TABLE manufacturers (
 
 -- Create the craigslist_cars table
 CREATE TABLE cars (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     url TEXT,
     price DECIMAL,
     year INTEGER,

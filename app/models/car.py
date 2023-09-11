@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, TIMESTAMP, BIGINT
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime, BIGINT
 from sqlalchemy.sql.sqltypes import DECIMAL
 from db.base import Base
 
@@ -26,4 +26,4 @@ class Car(Base):
     description = Column(String)
     latitude = Column(Float)
     longitude = Column(Float)
-    posting_date = Column(TIMESTAMP)
+    posting_date = Column(DateTime(timezone=True))

@@ -14,7 +14,7 @@ class Manufacturer(Base):
 
 class Car(Base):
     __tablename__ = 'cars'
-    id: int = Column(BigInteger, primary_key=True)
+    id: int = Column(BigInteger, primary_key=True, autoincrement=True)
     url: str = Column(String)
     price: float = Column(DECIMAL)
     year: int = Column(Integer)

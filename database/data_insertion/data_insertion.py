@@ -38,7 +38,6 @@ if __name__ == '__main__':
                                                     session.query(Manufacturer).all()}
                 for _, row in chunk.iterrows():
                     car_mapping = {
-                        'id': row['id'],
                         'url': row['url'],
                         'price': row['price'],
                         'year': row['year'],
