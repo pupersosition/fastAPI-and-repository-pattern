@@ -1,7 +1,7 @@
 from sqlalchemy import delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from loguru import logger
+from core.logging import logger
 
 from repositories.base import AbstractCarRepository, AbstractManufacturerRepository
 from schemas.car import CarCreate, CarUpdate

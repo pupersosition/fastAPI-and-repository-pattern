@@ -1,6 +1,6 @@
 from fastapi.requests import Request
 from fastapi.responses import JSONResponse
-from loguru import logger
+from core.logging import logger
 from core.errors import CreateError, UpdateError, DeleteError, NotFoundError
 
 
