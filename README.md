@@ -1,6 +1,7 @@
 # used_cars_api
 
-A short description of the project
+A test case for a data serving Fast API api. 
+Data Source: Kaggle's **austinreese/craigslist-carstrucks-data**
 
 ## Development Requirements
 
@@ -8,16 +9,6 @@ A short description of the project
 - Pip
 - Poetry (Python Package Manager)
 
-### M.L Model Environment
-
-```sh
-MODEL_PATH=./ml/model/
-MODEL_NAME=model.pkl
-```
-
-### Update `/predict`
-
-To update your machine learning model, add your `load` and `method` [change here](app/api/routes/predictor.py#L19) at `predictor.py`
 
 ## Installation
 
@@ -49,43 +40,48 @@ make install
 
 ## Project structure
 
-Files related to application are in the `app` or `tests` directories.
 Application parts are:
 
-    app
+    .
+    ├── app
+    │   | # Main FAST API
+    │   ├── api             - Contains all the route definitions.
+    │   │   └── routes
+    │   │       ├── cars.py          - Routes for cars.
+    │   │       └── manufacturer.py  - Routes for manufacturers.
+    │   ├── core            - Core functionalities like exceptions, handlers, and logging.
+    │   │   ├── errors.py              - Custom exceptions.
+    │   │   ├── exception_handlers.py  - FAST API exception handlers.
+    │   │   └── logging.py             - Logger.
+    │   ├── db              - Everything database-related.
+    │   │   ├── base        - Handles database connection.
+    │   │   └── session     - Deals with the database session.
+    │   ├── docker          - Docker configurations.
+    │   │   └── api.dockerfile - Dockerfile for the API.
+    │   ├── models          - ORM SQLAlchemy models.
+    │   │   ├── cars.py                - ORM model for cars.
+    │   │   └── manufacturer.py        - ORM model for manufacturers.
+    │   ├── repositories    - Implements the repository design pattern for db interactions.
+    │   │   ├── base.py                - Base repository.
+    │   │   └── sqlalchemy_repository.py - Repository for SQLAlchemy.
+    │   ├── schemas         - Pydantic models.
+    │   │   ├── car.py                 - Pydantic model for cars.
+    │   │   └── manufacturer.py        - Pydantic model for manufacturers.
+    │   ├── services        - Business logic and CRUD operations.
+    │   │   ├── cars.py                - Service for cars.
+    │   │   └── manufacturers.py       - Service for manufacturers.
+    │   └── main.py         - Main application script.
     |
-    | # Fast-API stuff
-    ├── api                 - web related stuff.
-    │   └── routes          - web routes.
-    ├── core                - application configuration, startup events, logging.
-    ├── models              - pydantic models for this application.
-    ├── services            - logic that is not just crud related.
-    ├── main-aws-lambda.py  - [Optional] FastAPI application for AWS Lambda creation and configuration.
-    └── main.py             - FastAPI application creation and configuration.
+    ├── database
+    │   | # Database setup and initial data insertion.
+    │   └── data-insertion
+    │       ├── data_insertion.dockerfile  - Dockerfile for data insertion.
+    │       ├── data_insertion.py          - Script to insert initial data.
+    │       ├── models.py                  - ORM models.
+    │       └── utils.py                   - Utilities for data insertion.
     |
-    | # ML stuff
-    ├── data             - where you persist data locally
-    │   ├── interim      - intermediate data that has been transformed.
-    │   ├── processed    - the final, canonical data sets for modeling.
-    │   └── raw          - the original, immutable data dump.
-    │
-    ├── notebooks        - Jupyter notebooks. Naming convention is a number (for ordering),
-    |
-    ├── ml               - modelling source code for use in this project.
-    │   ├── __init__.py  - makes ml a Python module
-    │   ├── pipeline.py  - scripts to orchestrate the whole pipeline
-    │   │
-    │   ├── data         - scripts to download or generate data
-    │   │   └── make_dataset.py
-    │   │
-    │   ├── features     - scripts to turn raw data into features for modeling
-    │   │   └── build_features.py
-    │   │
-    │   └── model        - scripts to train models and make predictions
-    │       ├── predict_model.py
-    │       └── train_model.py
-    │
-    └── tests            - pytest
+    └── tests               - Tests for the application.
+
 
 ## GCP
 Deploying inference service to Cloud Run
