@@ -93,3 +93,6 @@ target/
 
 # Kaggle keys
 database/kaggle.json
+
+# logs
+app/logs
