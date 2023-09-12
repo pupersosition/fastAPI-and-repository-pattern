@@ -52,7 +52,7 @@ class SQLAlchemyManufacturerRepository(AbstractManufacturerRepository):
         self.session = session
 
     async def create(self, manufacturer: ManufacturerCreate) -> ManufacturerModel:
-        db_manufacturer = CarModel(**manufacturer.dict())
+        db_manufacturer = ManufacturerModel(**manufacturer.dict())
         self.session.add(db_manufacturer)
         await self.session.commit()
         await self.session.refresh(db_manufacturer)
