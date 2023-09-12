@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 from routes import car, manufacturer
+from routes import car
 
 app = FastAPI()
 
