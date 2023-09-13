@@ -1,5 +1,6 @@
+from core.rate_limit import limiter
 from db.session import get_db
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Response, Request
 from repositories.base import AbstractCarRepository
 from repositories.sqlalchemy_repository import SQLAlchemyCarRepository
 from schemas.car import CarCreate, CarUpdate, Car
@@ -17,9 +18,9 @@ def get_car_repo(db: AsyncSession = Depends(get_db)) -> AbstractCarRepository:
 async def create_car_endpoint(car: CarCreate, car_repo: AbstractCarRepository = Depends(get_car_repo)):
     return await car_repo.create(car)
 
-
 @router.get("/{car_id}", response_model=Car)
-async def read_car(car_id: int, car_repo: AbstractCarRepository = Depends(get_car_repo)):
+@limiter.limit("5/minute")
+async def read_car(request: Request, car_id: int, car_repo: AbstractCarRepository = Depends(get_car_repo)):
     return await car_repo.get_by_id(car_id)
 
 

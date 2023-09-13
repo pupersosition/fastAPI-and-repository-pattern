@@ -18,6 +18,7 @@ pytest = "7.2"
 pytest-asyncio = "^0.21.1"
 httpx = "^0.25.0"
 pytest-mock = "^3.11.1"
+slowapi = "^0.1.8"
 
 [tool.poetry.group.database.dependencies]
 pandas = "^2.1.0"
