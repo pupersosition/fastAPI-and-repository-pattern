@@ -1,11 +1,12 @@
 import time
 from contextlib import contextmanager
+from typing import List, Dict, Union, Any, Generator
+
+import pandas as pd
 from sqlalchemy import Table, create_engine
-from sqlalchemy.orm import Session, sessionmaker
 from sqlalchemy.dialects.postgresql import insert
 from sqlalchemy.exc import OperationalError
-from typing import List, Dict, Union, Any, Generator
-import pandas as pd
+from sqlalchemy.orm import Session, sessionmaker
 
 
 def create_session(MAX_ATTEMPTS: int, SLEEP_INTERVAL: int, DB_USER: str, DB_PASS: str, DB_HOST: str,
@@ -22,7 +23,7 @@ def create_session(MAX_ATTEMPTS: int, SLEEP_INTERVAL: int, DB_USER: str, DB_PASS
 
 @contextmanager
 def session_scope(MAX_ATTEMPTS: int, SLEEP_INTERVAL: int, DB_USER: str, DB_PASS: str, DB_HOST: str, DB_NAME: str) -> \
-Generator[Session, None, None]:
+        Generator[Session, None, None]:
     session = create_session(MAX_ATTEMPTS, SLEEP_INTERVAL, DB_USER, DB_PASS, DB_HOST, DB_NAME)
     try:
         yield session

@@ -1,9 +1,10 @@
-from sqlalchemy import Column, Integer, String, ForeignKey, Float, DECIMAL, BigInteger, DateTime
-from sqlalchemy.orm import relationship, declarative_base
 from datetime import datetime
 
+from sqlalchemy import Column, Integer, String, ForeignKey, Float, DECIMAL, BigInteger, DateTime
+from sqlalchemy.orm import relationship, declarative_base
 
 Base = declarative_base()
+
 
 class Manufacturer(Base):
     __tablename__ = 'manufacturers'

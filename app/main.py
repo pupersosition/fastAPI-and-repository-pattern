@@ -1,10 +1,10 @@
 from fastapi import FastAPI
-from routes import car, manufacturer
 from routes import car
+from routes import manufacturer
 
+from core.errors import CreateError, UpdateError, DeleteError, NotFoundError
 from core.exception_handlers import (create_error_handler, update_error_handler,
                                      delete_error_handler, not_found_error_handler)
-from core.errors import CreateError, UpdateError, DeleteError, NotFoundError
 
 app = FastAPI()
 

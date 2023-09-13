@@ -1,10 +1,9 @@
+import os
+
+from loguru import logger
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker
-from loguru import logger
-
-import os
-
 
 DB_HOST: str = os.environ['DB_HOST']
 DB_NAME: str = os.environ['DB_NAME']

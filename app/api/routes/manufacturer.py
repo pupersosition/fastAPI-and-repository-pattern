@@ -1,10 +1,9 @@
-from fastapi import APIRouter, Depends
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from schemas.manufacturer import ManufacturerCreate, ManufacturerUpdate, Manufacturer
-from repositories.sqlalchemy_repository import SQLAlchemyManufacturerRepository
-from repositories.base import AbstractManufacturerRepository
 from db.session import get_db
+from fastapi import APIRouter, Depends, Response
+from repositories.base import AbstractManufacturerRepository
+from repositories.sqlalchemy_repository import SQLAlchemyManufacturerRepository
+from schemas.manufacturer import ManufacturerCreate, ManufacturerUpdate, Manufacturer
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 
@@ -32,15 +31,16 @@ async def list_manufacturers(skip: int = 0, limit: int = 10,
     return await manufacturer_repo.get_all(skip=skip, limit=limit)
 
 
-@router.put("/{manufacturer_id}", response_model=Manufacturer)
+@router.patch("/{manufacturer_id}", response_model=Manufacturer)
 async def update_manufacturer_endpoint(manufacturer_id: int, manufacturer: ManufacturerUpdate,
                                        manufacturer_repo: AbstractManufacturerRepository = Depends(
                                            get_manufacturer_repo)):
     return await manufacturer_repo.update(manufacturer_id, manufacturer)
 
 
-@router.delete("/{manufacturer_id}", response_model=Manufacturer)
+@router.delete("/{manufacturer_id}", status_code=204)
 async def delete_manufacturer_endpoint(manufacturer_id: int,
                                        manufacturer_repo: AbstractManufacturerRepository = Depends(
                                            get_manufacturer_repo)):
     await manufacturer_repo.delete(manufacturer_id)
+    return Response(status_code=204)

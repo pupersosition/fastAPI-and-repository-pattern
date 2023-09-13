@@ -1,16 +1,15 @@
+from typing import Optional, List
+
+from core.errors import NotFoundError, CreateError, UpdateError, DeleteError
+from core.logging import logger
+from models.car import Car as CarModel
+from models.manufacturer import Manufacturer as ManufacturerModel
+from repositories.base import AbstractCarRepository, AbstractManufacturerRepository
+from schemas.car import CarCreate, CarUpdate
+from schemas.manufacturer import ManufacturerCreate, ManufacturerUpdate
 from sqlalchemy import delete, update
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy.future import select
-from core.logging import logger
-
-from repositories.base import AbstractCarRepository, AbstractManufacturerRepository
-from schemas.car import CarCreate, CarUpdate
-from models.car import Car as CarModel
-from typing import Optional, List
-from models.manufacturer import Manufacturer as ManufacturerModel
-from schemas.manufacturer import ManufacturerCreate, ManufacturerUpdate
-
-from core.errors import NotFoundError, CreateError, UpdateError, DeleteError
 
 
 class SQLAlchemyCarRepository(AbstractCarRepository):
@@ -101,7 +100,8 @@ class SQLAlchemyManufacturerRepository(AbstractManufacturerRepository):
                 .values(**manufacturer.dict())
             )
             await self.session.commit()
-            result = await self.session.execute(select(ManufacturerModel).filter(ManufacturerModel.id == manufacturer_id))
+            result = await self.session.execute(
+                select(ManufacturerModel).filter(ManufacturerModel.id == manufacturer_id))
             updated_manufacturer = result.scalars().first()
             if updated_manufacturer is None:
                 raise NotFoundError(f"Manufacturer with id {manufacturer_id} not found after update.")
@@ -117,5 +117,3 @@ class SQLAlchemyManufacturerRepository(AbstractManufacturerRepository):
         except Exception as e:
             logger.error(f"Error deleting manufacturer with id {manufacturer_id}: {e}")
             raise DeleteError(f"Error deleting manufacturer with id {manufacturer_id}: {str(e)}")
-
-

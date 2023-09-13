@@ -1,10 +1,11 @@
-import pandas as pd
-from typing import List, Dict, Any
 import os
+from typing import List, Dict, Any
 
-from utils import session_scope, bulk_insert_avoid_conflicts, clean_data
-from models import Car, Manufacturer
+import pandas as pd
 from dateutil.parser import parse
+
+from models import Car, Manufacturer
+from utils import session_scope, bulk_insert_avoid_conflicts, clean_data
 
 # Configuration
 DB_HOST: str = os.environ['DB_HOST']

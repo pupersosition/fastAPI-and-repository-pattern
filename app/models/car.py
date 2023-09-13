@@ -2,6 +2,7 @@ from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime, BIG
 from sqlalchemy.sql.sqltypes import DECIMAL
 from db.base import Base
 
+
 class Car(Base):
     __tablename__ = "cars"
 
