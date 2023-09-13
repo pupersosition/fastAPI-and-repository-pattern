@@ -8,14 +8,18 @@ from repositories.base import AbstractCarRepository, AbstractManufacturerReposit
 from schemas.car import CarCreate, CarUpdate
 from schemas.manufacturer import ManufacturerCreate, ManufacturerUpdate
 from sqlalchemy import delete, update
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy.future import select
 
 
 class SQLAlchemyCarRepository(AbstractCarRepository):
 
     def __init__(self, session: AsyncSession):
         self.session = session
+
+    async def count_all(self) -> int:
+        result = await self.session.execute(select(func.count()).select_from(CarModel))
+        return result.scalar()
 
     async def create(self, car: CarCreate) -> CarModel:
         try:
@@ -35,9 +39,16 @@ class SQLAlchemyCarRepository(AbstractCarRepository):
             raise NotFoundError(f"Car with id {car_id} not found.")
         return car
 
-    async def get_all(self, skip: int = 0, limit: int = 10) -> List[CarModel]:
+    async def get_all(self, skip: int = 0, limit: int = 10) -> dict:
         result = await self.session.execute(select(CarModel).offset(skip).limit(limit))
-        return result.scalars().all()
+        total_count = await self.count_all()
+        return {
+            "total": total_count,
+            "skip": skip,
+            "limit": limit,
+            "items": result.scalars().all()
+        }
+
 
     async def update(self, car_id: int, car: CarUpdate) -> CarModel:
         try:

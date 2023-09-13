@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, Response
-from sqlalchemy.ext.asyncio import AsyncSession
-
-from schemas.car import CarCreate, CarUpdate, Car
-from repositories.sqlalchemy_repository import SQLAlchemyCarRepository
-from repositories.base import AbstractCarRepository
 from db.session import get_db
+from fastapi import APIRouter, Depends, Response
+from repositories.base import AbstractCarRepository
+from repositories.sqlalchemy_repository import SQLAlchemyCarRepository
+from schemas.car import CarCreate, CarUpdate, Car
+from schemas.pagination import CarPagination
+from sqlalchemy.ext.asyncio import AsyncSession
 
 router = APIRouter()
 
@@ -23,7 +23,7 @@ async def read_car(car_id: int, car_repo: AbstractCarRepository = Depends(get_ca
     return await car_repo.get_by_id(car_id)
 
 
-@router.get("/", response_model=list[Car])
+@router.get("/", response_model=CarPagination)
 async def list_cars(skip: int = 0, limit: int = 10, car_repo: AbstractCarRepository = Depends(get_car_repo)):
     return await car_repo.get_all(skip=skip, limit=limit)
 
