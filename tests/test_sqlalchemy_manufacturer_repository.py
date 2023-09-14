@@ -76,11 +76,17 @@ def test_get_manufacturer_by_id(client, example_manufacturer_data, mocker, examp
 
 def test_get_all_manufacturers(client, mocker, example_manufacturer_model_list):
     mocker.patch("repositories.sqlalchemy_repository.SQLAlchemyManufacturerRepository.get_all",
-                 return_value=example_manufacturer_model_list)
+                 return_value={
+                     "total": len(example_manufacturer_model_list),
+                     "skip": 0,
+                     "limit": 10,
+                     "items": example_manufacturer_model_list
+                 })
     response = client.get("/manufacturers/")
     assert response.status_code == 200
     retrieved_manufacturers = response.json()
-    assert len(retrieved_manufacturers) == len(example_manufacturer_model_list)
+    assert len(retrieved_manufacturers["items"]) == len(example_manufacturer_model_list)
+
 
 
 def test_update_manufacturer(client, example_updated_manufacturer_data, mocker, example_updated_manufacturer_model):

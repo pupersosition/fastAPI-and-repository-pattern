@@ -4,6 +4,7 @@ from repositories.base import AbstractManufacturerRepository
 from repositories.sqlalchemy_repository import SQLAlchemyManufacturerRepository
 from schemas.manufacturer import ManufacturerCreate, ManufacturerUpdate, Manufacturer
 from sqlalchemy.ext.asyncio import AsyncSession
+from schemas.pagination import ManufacturerPagination
 
 router = APIRouter()
 
@@ -25,7 +26,7 @@ async def read_manufacturer(manufacturer_id: int,
     return await manufacturer_repo.get_by_id(manufacturer_id)
 
 
-@router.get("/", response_model=list[Manufacturer])
+@router.get("/", response_model=ManufacturerPagination)
 async def list_manufacturers(skip: int = 0, limit: int = 10,
                              manufacturer_repo: AbstractManufacturerRepository = Depends(get_manufacturer_repo)):
     return await manufacturer_repo.get_all(skip=skip, limit=limit)

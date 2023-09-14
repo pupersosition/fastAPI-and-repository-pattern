@@ -1,44 +1,71 @@
-# used_cars_api
+# 🚗 Used Car Data API with FastAPI
 
-A test case for a data serving Fast API api. 
-Data Source: Kaggle's **austinreese/craigslist-carstrucks-data**
+This repository contains a FastAPI application designed to serve data about used cars sourced from Kaggle. It provides an intuitive API to query, filter, and access detailed records of used cars. Whether you're a data enthusiast, researcher, or developer, this API is designed to help you harness the power of used car data at your fingertips.
 
-## Development Requirements
+## 🔥 Features
 
-- Python3.11.0
-- Pip
-- Poetry (Python Package Manager)
+- Rich Data Set: Details about make, model, price, mileage, and more.
+- Fast & Efficient: Powered by FastAPI for high-speed performance.
+- Interactive Docs: Explore the API using FastAPI's built-in Swagger UI.
 
 
-## Installation
+## 🚀 Quick Start
 
-```sh
-python -m venv venv
-source venv/bin/activate
-make install
-```
+### Prerequisites
+Python 3.7+
+Pip
+### Installation & Setup
+Clone the repository:
+bash
+Copy code
+git clone https://github.com/[YourGitHubUsername]/used-car-data-api.git
+cd used-car-data-api
+Install the requirements:
+bash
+Copy code
+pip install -r requirements.txt
+Run the FastAPI application:
+bash
+Copy code
+uvicorn main:app --reload
+Access the API documentation at http://127.0.0.1:8000/docs.
 
-## Runnning Localhost
+## 🌐 Endpoints
 
-`make run`
+/cars: Get a list of all used cars.
+/cars/{id}: Get detailed information about a specific car by its ID.
+... [Add more endpoints or details as required]
+## 📜 Data Source
 
-## Deploy app
+The data utilized in this application is sourced from Kaggle. Special thanks to [Link to Kaggle Dataset Author/Source] for making this data publicly available.
 
-`make deploy`
+Testing
 
-## Running Tests
+Instructions or scripts related to testing the API.
 
-`make test`
+Contributing
 
-## Access Swagger Documentation
+We welcome contributions! Please see the CONTRIBUTING.md for details.
 
-> <http://localhost:8080/docs>
+License
 
-## Access Redocs Documentation
+This project is licensed under the MIT License. See LICENSE for more details.
 
-> <http://localhost:8080/redoc>
+Acknowledgements
 
-## Project structure
+FastAPI: For their amazing asynchronous web framework.
+Kaggle: For hosting the dataset and fostering a community around data.
+... [Add any other acknowledgements or tools/libraries you've used]
+
+## 🧪 Testing
+
+[Provide instructions or mention testing utilities/methods you've used]
+
+## 📄 License
+
+MIT License
+
+## 📂 Project Structure
 
 Application parts are:
 
@@ -83,45 +110,7 @@ Application parts are:
     └── tests               - Tests for the application.
 
 
-## GCP
-Deploying inference service to Cloud Run
+## 💖 Acknowledgements
 
-### Authenticate
-
-1. Install `gcloud` cli
-2. `gcloud auth login`
-3. `gcloud config set project <PROJECT_ID>`
-
-### Enable APIs
-
-1. Cloud Run API
-2. Cloud Build API
-3. IAM API
-
-### Deploy to Cloud Run
-
-1. Run `gcp-deploy.sh`
-
-### Clean up
-
-1. Delete Cloud Run
-2. Delete Docker image in GCR
-
-## AWS
-Deploying inference service to AWS Lambda
-
-### Authenticate
-
-1. Install `awscli` and `sam-cli`
-2. `aws configure`
-
-### Deploy to Lambda
-
-1. Run `sam build`
-2. Run `sam deploy --guiChange this portion for other types of models
-## Add the correct type hinting when completed
-
-`aws cloudformation delete-stack --stack-name <STACK_NAME_ON_CREATION>`
-
-
-Made by https://github.com/arthurhenrique/cookiecutter-fastapi/graphs/contributors with ❤️
+- FastAPI
+- Kaggle

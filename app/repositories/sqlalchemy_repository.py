@@ -49,7 +49,6 @@ class SQLAlchemyCarRepository(AbstractCarRepository):
             "items": result.scalars().all()
         }
 
-
     async def update(self, car_id: int, car: CarUpdate) -> CarModel:
         try:
             await self.session.execute(
@@ -81,6 +80,10 @@ class SQLAlchemyManufacturerRepository(AbstractManufacturerRepository):
     def __init__(self, session: AsyncSession):
         self.session = session
 
+    async def count_all(self) -> int:
+        result = await self.session.execute(select(func.count()).select_from(CarModel))
+        return result.scalar()
+
     async def create(self, manufacturer: ManufacturerCreate) -> ManufacturerModel:
         try:
             db_manufacturer = ManufacturerModel(**manufacturer.dict())
@@ -101,7 +104,13 @@ class SQLAlchemyManufacturerRepository(AbstractManufacturerRepository):
 
     async def get_all(self, skip: int = 0, limit: int = 10) -> List[ManufacturerModel]:
         result = await self.session.execute(select(ManufacturerModel).offset(skip).limit(limit))
-        return result.scalars().all()
+        total_count = await self.count_all()
+        return {
+            "total": total_count,
+            "skip": skip,
+            "limit": limit,
+            "items": result.scalars().all()
+        }
 
     async def update(self, manufacturer_id: int, manufacturer: ManufacturerUpdate) -> ManufacturerModel:
         try:

@@ -157,12 +157,19 @@ def test_get_car_by_id(client, example_car_data, mocker, example_car_model):
 
 
 def test_get_all_cars(client, mocker, example_car_model_list):
-    mocker.patch("repositories.sqlalchemy_repository.SQLAlchemyCarRepository.get_all",
-                 return_value=example_car_model_list)
+    mocker.patch(
+        "repositories.sqlalchemy_repository.SQLAlchemyCarRepository.get_all",
+        return_value={
+            "total": len(example_car_model_list),
+            "skip": 0,
+            "limit": 10,
+            "items": example_car_model_list
+        }
+    )
     response = client.get("/cars/")
     assert response.status_code == 200
     retrieved_cars = response.json()
-    assert len(retrieved_cars) == len(example_car_model_list)
+    assert len(retrieved_cars["items"]) == len(example_car_model_list)
 
 
 def test_update_car(client, example_updated_car_data, mocker, example_updated_car_model):
